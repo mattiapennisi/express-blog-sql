@@ -1,5 +1,4 @@
 const connection = require('../data/db.js')
-const { connect } = require('../routers/postsRouters')
 
 function index(req, res) {
     const sql = 'SELECT * FROM posts'
