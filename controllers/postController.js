@@ -1,4 +1,5 @@
 const connection = require('../data/db.js')
+const { connect } = require('../routers/postsRouters')
 
 function index(req, res) {
     const sql = 'SELECT * FROM posts'
@@ -10,7 +11,33 @@ function index(req, res) {
 }
 
 function show(req, res) {
+    const id = req.params.id
+    const postSql = `
+        SELECT * 
+        FROM posts 
+        WHERE id = ?
+        `
 
+    const tagsSql = `
+        SELECT I.*
+        FROM tags AS I
+        JOIN post_tag AS IP ON I.id = IP.tag_id
+        WHERE IP.post_id = ?
+        `
+
+    connection.query(postSql, [id], (err, postResults) => {
+        if (err) return res.status(500).json({ error: 'Database query failed' })
+        if (postResults.length === 0) return res.status(404).json({ error: 'Post not found' })
+
+        const post = postResults[0]
+
+        connection.query(tagsSql, [id], (err, tagsResults) => {
+            if (err) return res.status(500).json({ error: 'Database query failed' })
+
+            post.tags = tagsResults
+            res.json(post)
+        })
+    })
 }
 
 function store(req, res) {
