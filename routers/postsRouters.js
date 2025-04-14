@@ -8,15 +8,15 @@ const postController = require('../controllers/postController.js')
 // Routes
 router.get('/', postController.index)
 
-router.get('/:slug', postController.show)
+router.get('/:id', postController.show)
 
 router.post('/', postController.store)
 
-router.put('/:slug', postController.update)
+router.put('/:id', postController.update)
 
-router.patch('/:slug', postController.modify)
+router.patch('/:id', postController.modify)
 
-router.delete('/:slug', postController.destroy)
+router.delete('/:id', postController.destroy)
 
 // Export
 module.exports = router
