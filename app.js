@@ -2,9 +2,10 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
-const port = 3000;
+const port = 3000
 
 const postsRouter = require('./routers/postsRouters.js')
+const connection = require('./data/db')
 const error500 = require('./errors/error500.js')
 const error404 = require('./errors/error404.js')
 
